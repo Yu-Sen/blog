@@ -1,0 +1,682 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题  select控件 点击蒙版关闭控件　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：　　$(&amp;quot;input&amp;quot;).select(&amp;quot;close&amp;quot;)　　实现方法是就是获">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自建应用字段编辑+JqueryWeUI">
+<meta property="og:url" content="http://yoursite.com/2017/06/15/select/index.html">
+<meta property="og:site_name" content="Ethan&#39;s Blog">
+<meta property="og:description" content="在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题  select控件 点击蒙版关闭控件　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：　　$(&amp;quot;input&amp;quot;).select(&amp;quot;close&amp;quot;)　　实现方法是就是获">
+<meta property="og:updated_time" content="2017-06-16T08:19:56.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自建应用字段编辑+JqueryWeUI">
+<meta name="twitter:description" content="在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题  select控件 点击蒙版关闭控件　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：　　$(&amp;quot;input&amp;quot;).select(&amp;quot;close&amp;quot;)　　实现方法是就是获">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/15/select/"/>
+
+
+
+
+
+  <title>自建应用字段编辑+JqueryWeUI | Ethan's Blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ethan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/15/select/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ethan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ethan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自建应用字段编辑+JqueryWeUI</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-15T16:53:15+08:00">
+                2017-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>　　在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题</p>
+</blockquote>
+<h1 id="select控件"><a href="#select控件" class="headerlink" title="select控件"></a>select控件</h1><ul>
+<li><p>点击蒙版关闭控件<br>　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：<br>　　<code>$(&quot;input&quot;).select(&quot;close&quot;)</code><br>　　实现方法是就是获取蒙版元素，给蒙版元素添加点击事件，手动调用<code>select(&quot;close&quot;)</code><br>　　代码：<br>　　<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(element).find(<span class="string">'.weui_mask'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>)</span>&#123;</div><div class="line">    e.stopPropagation();</div><div class="line">    scope.value = oldValue</div><div class="line">    scope.cancel = <span class="literal">true</span>;</div><div class="line">    $(element).find(<span class="string">'input'</span>).select(<span class="string">"close"</span>);</div><div class="line">   &#125;)</div></pre></td></tr></table></figure></p>
+<p>  这里需要注意的是，<code>$(element).find(&#39;input&#39;).select(&quot;close&quot;);</code>实际是去执行了初始化时候的onClose方法,同时onClose回调也会执行。</p>
+</li>
+<li>点击选项但不提交，再次打卡控件默认选项问题<br>　　需求：一个下拉选框，选项ABC，默认选中A选项。<br>现在选中B选项。<br>点击蒙版关闭控件，不改变值，并且下次打开控件仍然默认选中A选项。<br>点击确定关闭控件，并改变值，下次打开控件默认选中B选项。<br>　　实现方法：select控件在初始化的时候提供了设置初始值的参数<code>input</code>，默认<code>undefiend</code>。并且提供了更改这些参数的方法<code>$(&quot;input&quot;).select(&quot;update&quot;, { items: [&quot;法官&quot;, &quot;猎人&quot;, ...] })</code>。<br>这两个配合起来使用就能实现这个需求。</li>
+</ul>
+<p>　　代码：<br>　　<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">scope.value = scope.value||<span class="string">''</span>;		<span class="comment">//值</span></div><div class="line">   <span class="keyword">var</span> oldValue = angular.copy(scope.value);</div><div class="line">   $(element).find(<span class="string">'input'</span>).select(&#123;</div><div class="line">       <span class="attr">input</span>:scope.value,</div><div class="line">       <span class="attr">title</span>: new_title,</div><div class="line">       <span class="attr">items</span>: scope.list,</div><div class="line">       <span class="attr">autoClose</span>: <span class="literal">false</span>,</div><div class="line">       <span class="attr">multi</span>: <span class="literal">false</span>,</div><div class="line">       <span class="attr">onChange</span>: <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</div><div class="line">           <span class="keyword">var</span> chooseone= $(element).find(<span class="string">'input'</span>).attr(<span class="string">'data-values'</span>);</div><div class="line">           scope.value = chooseone;</div><div class="line">           scope.current_select = chooseone;</div><div class="line">       &#125;,</div><div class="line">       <span class="attr">onOpen</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">           scope.cancel = <span class="literal">false</span>;</div><div class="line">           $(element).find(<span class="string">'.weui_mask'</span>).addClass(<span class="string">'weui_mask_visible'</span>)</div><div class="line">       &#125;,</div><div class="line">       <span class="attr">onClose</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">           scope.$apply(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">               oldValue = angular.copy(scope.value);</div><div class="line">               scope.valuename = angular.copy(scope.value);		<span class="comment">//显示需要</span></div><div class="line">           &#125;);</div><div class="line">           <span class="keyword">if</span>(scope.isdetail&amp;&amp;scope.cancel==<span class="literal">false</span>)&#123;</div><div class="line">               scope.submitEdit();			<span class="comment">//提交数据</span></div><div class="line">           &#125;</div><div class="line">           $(element).find(<span class="string">'.weui_mask'</span>).removeClass(<span class="string">'weui_mask_visible'</span>);</div><div class="line">       &#125;</div><div class="line">   &#125;);</div><div class="line">   $(element).find(<span class="string">'.weui_mask'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">       e.stopPropagation();</div><div class="line">       scope.value = oldValue</div><div class="line">       scope.cancel = <span class="literal">true</span>;</div><div class="line">       $(element).find(<span class="string">'input'</span>).select(<span class="string">"close"</span>);</div><div class="line">   &#125;)；</div><div class="line">   scope.showSelect = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">       $(element).find(<span class="string">'input'</span>).select(<span class="string">'update'</span>,&#123;</div><div class="line">           <span class="attr">input</span>:scope.value</div><div class="line">       &#125;)</div><div class="line">	$(element).find(<span class="string">'input'</span>).select(<span class="string">"open"</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/02/Hexo+GitPages搭建博客/" rel="next" title="Hexo+GitPages搭建个人博客">
+                <i class="fa fa-chevron-left"></i> Hexo+GitPages搭建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/15/IOS下输入框readonly无效/" rel="prev" title="IOS下输入框readonly无效">
+                IOS下输入框readonly无效 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Ethan" />
+          <p class="site-author-name" itemprop="name">Ethan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#select控件"><span class="nav-number">1.</span> <span class="nav-text">select控件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ethan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
