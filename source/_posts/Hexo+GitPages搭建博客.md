@@ -2,6 +2,11 @@
 title: Hexo+GitPages搭建个人博客
 date: 2017-06-02 17:02:53
 tags:
+- hexo
+- Git
+- 博客搭建
+categories:
+- 博客搭建
 ---
 > Git命令、Hexo框架、Markdown语句
 

@@ -1,14 +1,20 @@
 ---
 title: 自建应用字段编辑+JqueryWeUI
 date: 2017-06-15 16:53:15
+categories:
+- JQuery
 tags:
+- JQuery
+- WeUI
+- 工作总结
+description: 使用JQueryWeUI时遇到select组件没有提供点击蒙版关闭组件，以及不点击确定关闭控件后再次打开控件默认值的问题
 ---
-> 　　在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题
+> 在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题
 
 # select控件
 + 点击蒙版关闭控件
 　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：
-　　`$("input").select("close")`
+`$("input").select("close")`
 　　实现方法是就是获取蒙版元素，给蒙版元素添加点击事件，手动调用`select("close")`
 　　代码：
 　　```javascript

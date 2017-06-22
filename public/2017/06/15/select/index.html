@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JQuery,WeUI,工作总结," />
 
 
 
@@ -86,23 +86,24 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
 
 
 
 
 
 
-<meta name="description" content="在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题  select控件 点击蒙版关闭控件　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：　　$(&amp;quot;input&amp;quot;).select(&amp;quot;close&amp;quot;)　　实现方法是就是获">
+<meta name="description" content="使用JQueryWeUI时遇到select组件没有提供点击蒙版关闭组件，以及不点击确定关闭控件后再次打开控件默认值的问题">
+<meta name="keywords" content="JQuery,WeUI,工作总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自建应用字段编辑+JqueryWeUI">
 <meta property="og:url" content="http://yoursite.com/2017/06/15/select/index.html">
 <meta property="og:site_name" content="Ethan&#39;s Blog">
-<meta property="og:description" content="在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题  select控件 点击蒙版关闭控件　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：　　$(&amp;quot;input&amp;quot;).select(&amp;quot;close&amp;quot;)　　实现方法是就是获">
-<meta property="og:updated_time" content="2017-06-16T08:19:56.958Z">
+<meta property="og:description" content="使用JQueryWeUI时遇到select组件没有提供点击蒙版关闭组件，以及不点击确定关闭控件后再次打开控件默认值的问题">
+<meta property="og:updated_time" content="2017-06-20T07:38:11.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自建应用字段编辑+JqueryWeUI">
-<meta name="twitter:description" content="在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题  select控件 点击蒙版关闭控件　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：　　$(&amp;quot;input&amp;quot;).select(&amp;quot;close&amp;quot;)　　实现方法是就是获">
+<meta name="twitter:description" content="使用JQueryWeUI时遇到select组件没有提供点击蒙版关闭组件，以及不点击确定关闭控件后再次打开控件默认值的问题">
 
 
 
@@ -208,6 +209,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -296,6 +307,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JQuery/" itemprop="url" rel="index">
+                    <span itemprop="name">JQuery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -309,6 +342,10 @@
           
 
           
+              <div class="post-description">
+                  使用JQueryWeUI时遇到select组件没有提供点击蒙版关闭组件，以及不点击确定关闭控件后再次打开控件默认值的问题
+              </div>
+          
 
         </div>
       </header>
@@ -321,10 +358,10 @@
 
       
         <blockquote>
-<p>　　在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题</p>
+<p>在使用JqueryWeUI做自建应用各种字段编辑交互的时候遇到不少问题</p>
 </blockquote>
 <h1 id="select控件"><a href="#select控件" class="headerlink" title="select控件"></a>select控件</h1><ul>
-<li><p>点击蒙版关闭控件<br>　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：<br>　　<code>$(&quot;input&quot;).select(&quot;close&quot;)</code><br>　　实现方法是就是获取蒙版元素，给蒙版元素添加点击事件，手动调用<code>select(&quot;close&quot;)</code><br>　　代码：<br>　　<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(element).find(<span class="string">'.weui_mask'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>)</span>&#123;</div><div class="line">    e.stopPropagation();</div><div class="line">    scope.value = oldValue</div><div class="line">    scope.cancel = <span class="literal">true</span>;</div><div class="line">    $(element).find(<span class="string">'input'</span>).select(<span class="string">"close"</span>);</div><div class="line">   &#125;)</div></pre></td></tr></table></figure></p>
+<li><p>点击蒙版关闭控件<br>　　weui只有日期和时间控件提供了点击蒙版关闭控件的功能,但是在实际应用中select同样十分需要这种方便体验的交互，不过select控件提供了全局打开/关闭的API：<br><code>$(&quot;input&quot;).select(&quot;close&quot;)</code><br>　　实现方法是就是获取蒙版元素，给蒙版元素添加点击事件，手动调用<code>select(&quot;close&quot;)</code><br>　　代码：<br>　　<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(element).find(<span class="string">'.weui_mask'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>)</span>&#123;</div><div class="line">    e.stopPropagation();</div><div class="line">    scope.value = oldValue</div><div class="line">    scope.cancel = <span class="literal">true</span>;</div><div class="line">    $(element).find(<span class="string">'input'</span>).select(<span class="string">"close"</span>);</div><div class="line">   &#125;)</div></pre></td></tr></table></figure></p>
 <p>  这里需要注意的是，<code>$(element).find(&#39;input&#39;).select(&quot;close&quot;);</code>实际是去执行了初始化时候的onClose方法,同时onClose回调也会执行。</p>
 </li>
 <li>点击选项但不提交，再次打卡控件默认选项问题<br>　　需求：一个下拉选框，选项ABC，默认选中A选项。<br>现在选中B选项。<br>点击蒙版关闭控件，不改变值，并且下次打开控件仍然默认选中A选项。<br>点击确定关闭控件，并改变值，下次打开控件默认选中B选项。<br>　　实现方法：select控件在初始化的时候提供了设置初始值的参数<code>input</code>，默认<code>undefiend</code>。并且提供了更改这些参数的方法<code>$(&quot;input&quot;).select(&quot;update&quot;, { items: [&quot;法官&quot;, &quot;猎人&quot;, ...] })</code>。<br>这两个配合起来使用就能实现这个需求。</li>
@@ -356,6 +393,16 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JQuery/" rel="tag"># JQuery</a>
+          
+            <a href="/tags/WeUI/" rel="tag"># WeUI</a>
+          
+            <a href="/tags/工作总结/" rel="tag"># 工作总结</a>
+          
+        </div>
       
 
       
@@ -450,14 +497,32 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
